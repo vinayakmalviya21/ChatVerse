@@ -18,15 +18,17 @@ export const register = async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // profilePhoto
-        const maleProfilePhoto = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-        const femaleProfilePhoto = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+        // RoboHash sets: set1 to set5
+        const sets = ["set1", "set2", "set3", "set4", "set5"];
+        const randomSet = sets[Math.floor(Math.random() * sets.length)];
+
+        const profilePhotoOfUser = `https://robohash.org/${username}?set=${randomSet}`;
 
         await User.create({
             fullName,
             username,
             password: hashedPassword,
-            profilePhoto: gender === "male" ? maleProfilePhoto : femaleProfilePhoto,
+            profilePhoto: profilePhotoOfUser,
             gender
         });
         return res.status(201).json({

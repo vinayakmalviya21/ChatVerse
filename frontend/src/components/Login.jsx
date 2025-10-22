@@ -13,8 +13,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(`${process.env.REACT_APP_API_URL}`);
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
