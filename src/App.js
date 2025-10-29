@@ -32,15 +32,18 @@ function App() {
   useEffect(() => {
     if (authUser) {
       const socketio = io(`${process.env.REACT_APP_BASE_URL}`, {
+        withCredentials: true, // 👈 add this line
         query: {
           userId: authUser._id,
         },
       });
+
       dispatch(setSocket(socketio));
 
       socketio?.on("getOnlineUsers", (onlineUsers) => {
         dispatch(setOnlineUsers(onlineUsers));
       });
+
       return () => socketio.close();
     } else {
       if (socket) {
