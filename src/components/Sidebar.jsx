@@ -18,13 +18,10 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // keep a ref to the original full list so we can restore it later
   const originalUsersRef = useRef(null);
 
-  // If otherUsers comes from redux async load, store it once as the original list
   useEffect(() => {
     if (otherUsers && !originalUsersRef.current) {
-      // clone to avoid accidental mutation
       originalUsersRef.current = Array.isArray(otherUsers)
         ? [...otherUsers]
         : [];
@@ -50,15 +47,12 @@ const Sidebar = () => {
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-
     const q = search.trim().toLowerCase();
 
-    // If query is empty -> restore the original list (if we have it), otherwise refetch
     if (!q) {
       if (originalUsersRef.current) {
         dispatch(setOtherUsers(originalUsersRef.current));
       } else {
-        // fallback: fetch from server (only if we don't have original cached list)
         axios
           .get(`${process.env.REACT_APP_BASE_URL}/api/v1/user`)
           .then((res) => {
@@ -71,7 +65,6 @@ const Sidebar = () => {
       return;
     }
 
-    // filter using the ORIGINAL list if available so repeated searches work correctly
     const source = originalUsersRef.current ?? otherUsers ?? [];
     const matched = source.filter((user) =>
       user.fullName?.toLowerCase().includes(q)
@@ -80,26 +73,22 @@ const Sidebar = () => {
     if (matched.length) {
       dispatch(setOtherUsers(matched));
     } else {
-      // no matches: show toast and optionally clear list or keep as-is
       toast.error("User not found!");
-      // keep current displayed list unchanged — or uncomment to show empty:
-      // dispatch(setOtherUsers([]));
     }
   };
 
-  // Optional: live reset when user clears the input (makes UX smoother)
   useEffect(() => {
     if (search === "") {
       if (originalUsersRef.current) {
         dispatch(setOtherUsers(originalUsersRef.current));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   return (
-    <div className="h-full flex flex-col bg-zinc-900 p-4">
-      <div className="flex flex-col flex-1 min-h-0">
+    <div className="flex flex-col h-full bg-zinc-900">
+      {/* Search (sticky top) */}
+      <div className="p-4 border-b border-gray-800 sticky top-0 bg-zinc-900 z-20">
         <form
           onSubmit={searchSubmitHandler}
           className="flex items-center gap-2"
@@ -108,28 +97,27 @@ const Sidebar = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 min-w-0 bg-zinc-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 bg-zinc-800 text-white px-3 py-2 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
             type="text"
             placeholder="Search..."
           />
-
           <button
             type="submit"
-            className="flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 p-2 rounded-md text-white transition"
+            className="bg-indigo-600 hover:bg-indigo-700 p-2 rounded-md text-white transition"
             aria-label="search-button"
           >
             <BiSearchAlt2 className="w-5 h-5" />
           </button>
         </form>
-
-        <div className="divider my-4 border-gray-700"></div>
-
-        <div className="flex-1 overflow-y-auto min-h-0 min-w-0 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-zinc-900">
-          <OtherUsers />
-        </div>
       </div>
 
-      <div className="mt-4 border-t border-gray-800 pt-3">
+      {/* Scrollable users list */}
+      <div className="overflow-y-auto max-h-[calc(100vh-120px)] scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+        <OtherUsers />
+      </div>
+
+      {/* Sticky logout (bottom) */}
+      <div className="bg-zinc-900 border-t border-gray-800 p-3 sticky bottom-0 z-20">
         <button
           onClick={logoutHandler}
           className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition font-medium"
