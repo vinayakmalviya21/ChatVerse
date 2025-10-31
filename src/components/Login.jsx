@@ -42,7 +42,7 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center min-h-screen text-black">
-      <div className="w-full max-w-md p-8 rounded-xl shadow-lg bg-white/70 backdrop-blur-sm border border-gray-200">
+      <div className="w-full max-w-md p-8 rounded-xl shadow-lg bg-white/20 backdrop-blur-md border border-white/30">
         <h1 className="text-4xl font-extrabold text-center mb-6 text-purple-700">
           Login
         </h1>
@@ -52,7 +52,11 @@ const Login = () => {
             <input
               value={user.username}
               onChange={(e) => setUser({ ...user, username: e.target.value })}
-              className="w-full p-3 rounded-md border text-white border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none transition duration-200"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none"
               type="text"
               placeholder="Enter your username"
               required
@@ -63,7 +67,11 @@ const Login = () => {
             <input
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
-              className="w-full p-3 rounded-md text-white border border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none transition duration-200 pr-10"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               required

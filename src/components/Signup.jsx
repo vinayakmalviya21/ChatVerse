@@ -63,7 +63,11 @@ const Signup = () => {
               onChange={(e) => setUser({ ...user, fullName: e.target.value })}
               type="text"
               placeholder="Full Name"
-              className="w-full p-3 mt-1 rounded-lg text-white bg-gray-600 border border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none"
               required
             />
           </div>
@@ -75,7 +79,11 @@ const Signup = () => {
               onChange={(e) => setUser({ ...user, username: e.target.value })}
               type="text"
               placeholder="Username"
-              className="w-full p-3 mt-1 rounded-lg text-white bg-gray-600 border border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none"
               required
             />
           </div>
@@ -87,7 +95,11 @@ const Signup = () => {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="w-full p-3 mt-1 rounded-lg text-white bg-gray-600 border border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none pr-10"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none pr-10"
               required
             />
             <span
@@ -107,7 +119,11 @@ const Signup = () => {
               }
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
-              className="w-full p-3 mt-1 rounded-lg text-white bg-gray-600 border border-gray-300 focus:ring-2 focus:ring-purple-400 outline-none pr-10"
+              className="w-full p-3 mt-1 rounded-lg 
+             bg-gray-100 text-gray-900 
+             border border-gray-300 
+             placeholder-gray-500
+             focus:ring-2 focus:ring-purple-400 outline-none"
               required
             />
             <span
